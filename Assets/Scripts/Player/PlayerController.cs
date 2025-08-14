@@ -7,7 +7,7 @@ using UnityEngine;
 public class PlayerController : MonoBehaviourPun
 {
    [Range(0, 30)][SerializeField] private float _moveSpeed = 10f;
-
+   [Range(0, 30)][SerializeField] private float _rotationSpeed = 20f;
    
    //----- compoent ----- //
    private CharacterController _characterController;
@@ -70,7 +70,8 @@ public class PlayerController : MonoBehaviourPun
         if(direction.magnitude < 0.1f) return;
             
         float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg;  //역탄젠트를 써서 회전값(Degree) 구하기
-        transform.rotation = Quaternion.Euler(0, targetAngle, 0);   // y축에 대해서만 rotation 처리
+        Quaternion targetRotation = Quaternion.AngleAxis(targetAngle, Vector3.up);
+        transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, Time.deltaTime * _rotationSpeed);   // y축에 대해서만 rotation 처리
     }
     
 
