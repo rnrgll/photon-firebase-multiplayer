@@ -32,6 +32,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks
     public override void OnJoinedRoom()
     {
         Debug.Log("방에 접속하였습니다.");
+        SpawnPlayer();
     }
 
     
@@ -44,7 +45,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks
     void SpawnPlayer()
     {
         Vector3 spawnPosition = new Vector3(Random.Range(-5.0f, 5.0f), 0.0f, Random.Range(-5.0f, 5.0f));
-        PhotonNetwork.Instantiate("PlayerPrefab", spawnPosition, Quaternion.identity);
+        PhotonNetwork.Instantiate("Prefabs/PlayerPrefab", spawnPosition, Quaternion.identity);
         
         
         //이 두 줄이 함축된 내용이 위의 PhotonNetwork.Instantiate ~~ 부분이다.
