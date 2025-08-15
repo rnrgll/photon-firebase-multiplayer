@@ -144,7 +144,13 @@ public class ChatManager : MonoBehaviour, IChatClientListener
     // messages : 수신된 메시지 배열
     public void OnGetMessages(string channelName, string[] senders, object[] messages)
     {
-        throw new System.NotImplementedException();
+        for (int i = 0; i < senders.Length; i++)
+        {
+            string receivedMessage = $"{senders[i]}: {messages[i]}";
+            Debug.Log($"[{channelName}] {receivedMessage}");
+            
+            ChatUIManager.Instance.DisplayMessage(receivedMessage);
+        }
     }
 
     // 다른 플레이어가 보낸 개인 메시지를 수신했을 때 호출된다.
@@ -154,7 +160,7 @@ public class ChatManager : MonoBehaviour, IChatClientListener
     // channelName : 메시지가 속한 채널 이름 (포톤에서는 개인 메시지도 채널 네임이 포함되서 전달된다)
     public void OnPrivateMessage(string sender, object message, string channelName)
     {
-        throw new System.NotImplementedException();
+       
     }
 
 
@@ -164,7 +170,17 @@ public class ChatManager : MonoBehaviour, IChatClientListener
     // 특정 캐릭터가 길드 시스템에 가입하면 그 길드 채널을 사용할 수 있게 된다. 길드 채널에 들어오면 길드 채널 내부에서 채팅을 할 수 있어야한다. 이때 유저가 이 길드 채널을 구독시키는 방법으로 사용할 수 있다.
     public void OnSubscribed(string[] channels, bool[] results)
     {
-        throw new System.NotImplementedException();
+        for(int i = 0; i < channels.Length; i++)
+        {
+            if (results[i])
+            {
+                Debug.Log($"Subscribed to channel: {channels[i]}");
+            }
+            else
+            {
+                Debug.LogError($"Failed to subscribe to channel: {channels[i]}");
+            }
+        }
     }
 
     //채널 구독 해제 요청이 처리되었을 때 호출된다.
@@ -172,7 +188,7 @@ public class ChatManager : MonoBehaviour, IChatClientListener
     // channels : 구독 해제된 채널 이름 배열
     public void OnUnsubscribed(string[] channels)
     {
-        throw new System.NotImplementedException();
+        
     }
 
     /// <summary>
@@ -185,7 +201,7 @@ public class ChatManager : MonoBehaviour, IChatClientListener
     /// 친구 목록에서 친구가 온라인인지 오프라인인지를 확인할 수 있는 기능을 만들 수 있는 함수?
     public void OnStatusUpdate(string user, int status, bool gotMessage, object message)
     {
-        throw new System.NotImplementedException();
+      
     }
 
     
@@ -196,7 +212,7 @@ public class ChatManager : MonoBehaviour, IChatClientListener
     //길드 가입시 길드원이 가입했다고 메시지를 알려야한다. 이 때 이 메서드를 사용할 수 있다.
     public void OnUserSubscribed(string channel, string user)
     {
-        throw new System.NotImplementedException();
+      
     }
 
     //특정 사용자가 채널 구독을 해제했을 때 호출된다.
@@ -204,7 +220,7 @@ public class ChatManager : MonoBehaviour, IChatClientListener
     // user : 구독 해제한 사용자 이름
     public void OnUserUnsubscribed(string channel, string user)
     {
-        throw new System.NotImplementedException();
+        
     }
  
     #endregion
